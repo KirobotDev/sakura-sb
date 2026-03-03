@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/924611566148665346/baa8187f57979991d38812e415d41191.webp">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakura SB | Core Team</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Plus+Jakarta+Sans:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+
+        /* --- CONFIGURATION NAVBAR --- */
+        .main-nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            height: 70px;
+            background: rgba(2, 3, 5, 0.85); /* Fond sombre semi-transparent */
+            backdrop-filter: blur(12px);    /* Effet de flou derrière la barre */
+            border-bottom: 1px solid rgba(255, 183, 197, 0.15);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sakura);
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        .nav-logo img {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--sakura);
+            box-shadow: 0 0 10px rgba(255, 183, 197, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            transition: 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        /* Animation du trait sous les liens */
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 1px;
+            background: var(--sakura);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-item:hover { color: #fff; text-shadow: 0 0 8px var(--sakura); }
+        .nav-item:hover::after { width: 100%; }
+
+        /* Statut à droite */
+        .nav-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Orbitron';
+            font-size: 0.6rem;
+            color: var(--cyber);
+            background: rgba(0, 210, 255, 0.05);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 210, 255, 0.1);
+        }
+
+        .status-dot {
+            width: 6px; height: 6px;
+            background: var(--cyber);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--cyber);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 768px) {
+            .nav-container { padding: 0 15px; }
+            .nav-links { gap: 15px; }
+            .nav-item { font-size: 0.65rem; letter-spacing: 1px; }
+            .nav-logo span, .nav-status { display: none; } /* On cache pour gagner de la place */
+        }
+
+        /* IMPORTANT : Ajoute ceci pour que le contenu ne passe pas SOUS la navbar */
+        body {
+            padding-top: 90px;
+        }
+
+        :root {
+            --bg: #020305;
+            --sakura: #FFB7C5;
+            --cyber: #00D2FF;
+            --founder: #bb86fc;
+            --owner: #ff4444;
+            --coowner: #ffa333;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            padding: 80px 20px;
+            overflow-x: hidden;
+        }
+
+        /* --- BACKGROUND TECH --- */
+        .scanlines {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5) 51%);
+            background-size: 100% 4px; z-index: 10; pointer-events: none; opacity: 0.1;
+        }
+
+        /*
+        .back-home {
+            position: fixed; top: 40px; left: 40px; z-index: 100;
+            text-decoration: none; color: var(--sakura); font-family: 'Orbitron';
+            font-size: 0.7rem; letter-spacing: 2px; display: flex; align-items: center; gap: 8px;
+        }
+        */
+
+        /* LE NOUVEAU BOUTON RETOUR */
+        .back-home {
+            position: fixed; top: 25px; left: 25px; z-index: 1000;
+            text-decoration: none; color: var(--sakura); font-family: 'Orbitron';
+            font-size: 0.7rem; letter-spacing: 2px;
+            padding: 10px 20px; border: 1px solid rgba(255,183,197,0.2);
+            border-radius: 50px; background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px); transition: 0.4s;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .back-home:hover {
+            background: var(--sakura); color: #000;
+            box-shadow: 0 0 20px var(--sakura); transform: scale(1.05);
+        }
+
+        /* RESPONSIVE TEAM */
+        @media (max-width: 768px) {
+            header { margin-top: 60px; margin-bottom: 40px; }
+            h1 { font-size: 1.8rem; }
+            .team-container { 
+                grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+                padding: 10px;
+            }
+            .back-home { top: 15px; left: 15px; padding: 8px 15px; }
+        }
+
+        header { text-align: center; margin-bottom: 80px; }
+        h1 { font-family: 'Orbitron'; font-size: 3rem; letter-spacing: 10px; margin-bottom: 10px; }
+        .system-status { font-family: 'Orbitron'; color: var(--cyber); font-size: 0.8rem; letter-spacing: 3px; }
+
+        .team-container {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .member-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 183, 197, 0.05);
+            border-color: var(--sakura);
+        }
+
+        /* --- NOUVEAU DESIGN AVATAR --- */
+        .avatar-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover; /* Important pour ne pas déformer l'image */
+            border: 2px solid transparent;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Le halo lumineux derrière l'image */
+        .avatar-glow {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 50%;
+            filter: blur(15px);
+            opacity: 0.4;
+            z-index: 1;
+            transition: 0.3s;
+        }
+
+        /* Couleurs spécifiques par rôle */
+        .role-founder .avatar-img { border-color: var(--founder); }
+        .role-founder .avatar-glow { background: var(--founder); box-shadow: 0 0 20px var(--founder); }
+
+        .role-owner .avatar-img { border-color: var(--owner); }
+        .role-owner .avatar-glow { background: var(--owner); box-shadow: 0 0 20px var(--owner); }
+
+        .role-coowner .avatar-img { border-color: var(--coowner); }
+        .role-coowner .avatar-glow { background: var(--coowner); box-shadow: 0 0 20px var(--coowner); }
+
+        .name { display: block; font-family: 'Orbitron'; font-size: 1.1rem; margin-bottom: 5px; }
+        .handle { display: block; font-size: 0.8rem; opacity: 0.4; margin-bottom: 15px; }
+
+        .badge {
+            display: inline-block; padding: 5px 15px; border-radius: 5px;
+            font-size: 0.6rem; font-family: 'Orbitron'; font-weight: 900;
+            background: rgba(255,255,255,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://media.discordapp.net/attachments/1471802202925301831/1475232398768738464/sakura_sb.png?ex=699cbcbc&is=699b6b3c&hm=6d3b40a8421b13baded7da117835ca8ea1e6a0ba98aac50fcd23f22cdc5a5264&=&format=webp&quality=lossless" alt="Logo">
+                <span>SAKURA SB</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-item">HOME</a>
+                <a href="commands.html" class="nav-item">COMMANDS</a>
+                <a href="login.html" class="nav-item">LOGIN</a>
+                <a href="team.html" class="nav-item">TEAM</a>
+            </div>
+            <div class="nav-status">
+                <div class="status-dot"></div>
+                <span>V2.0 ONLINE</span>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <h1>CORE TEAM</h1>
+        <div class="system-status">SAKURA TEAM // SYSTEM CORE</div>
+    </header>
+
+    <div class="team-container">
+        
+        <div class="member-card role-founder">
+            <div class="avatar-container">
+                <img src="https://cdn.discordapp.com/avatars/924611566148665346/baa8187f57979991d38812e415d41191.webp" alt="Lag3n" class="avatar-img">
+                <div class="avatar-glow"></div>
+            </div>
+            <span class="name">- L a g 3 n -</span>
+            <span class="handle">@lag3n</span>
+            <span class="badge" style="color: var(--founder)">FOUNDER</span>
+        </div>
+
+        <div class="member-card role-founder">
+            <div class="avatar-container">
+                <img src="https://cdn.discordapp.com/avatars/1286231140490809375/4b95b26dae1bdc4af43d6297c3f00150.webp" alt="Reiji" class="avatar-img">
+                <div class="avatar-glow"></div>
+            </div>
+            <span class="name">࣪˙.꒷ 𝑹𝒆𝒊𝒋𝒊 ๑ ֹ ₊</span>
+            <span class="handle">@anh.sao</span>
+            <span class="badge" style="color: var(--founder)">FOUNDER</span>
+        </div>
+
+        <div class="member-card role-founder">
+            <div class="avatar-container">
+                <img src="https://cdn.discordapp.com/avatars/1430654427030622231/d6e97e4d4aa9cb55352d2b6458bf6a99.webp" alt="Ellie" class="avatar-img">
+                <div class="avatar-glow"></div>
+            </div>
+            <span class="name">Ellie</span>
+            <span class="handle">@yuneko.dev.</span>
+            <span class="badge" style="color: var(--founder)">FOUNDER</span>
+        </div>
+
+        <div class="member-card role-owner">
+            <div class="avatar-container">
+                <img src="https://cdn.discordapp.com/avatars/1473708784256942345/eb57456fea9d6ec1c8da51eb97d82e00.webp?size=128" alt="Blxssøm" class="avatar-img">
+                <div class="avatar-glow"></div>
+            </div>
+            <span class="name">🕷||𝓑𝓵𝔁𝓢𝓢ø𝓶||🌾</span>
+            <span class="handle">@u_re_ugly.</span>
+            <span class="badge" style="color: var(--owner)">OWNER</span>
+        </div>
+
+        <div class="member-card role-owner">
+            <div class="avatar-container">
+                <img src="https://cdn.discordapp.com/avatars/1031607418620235867/f32591132069b744caf3ebb74bf32c28.webp" alt="Agent" class="avatar-img">
+                <div class="avatar-glow"></div>
+            </div>
+            <span class="name">𝓐𝓰𝓮𝓷𝓽_𝓚𝓪𝓲𝓣𝓱𝓮𝓛𝓸𝓻𝓭</span>
+            <span class="handle">@agent_kaithelord</span>
+            <span class="badge" style="color: var(--owner)">OWNER</span>
+        </div>
+
+        <div class="member-card role-coowner">
+            <div class="avatar-container">
+                <img src="https://cdn.discordapp.com/avatars/1395273306566820001/a_6d1c42e92fab48bb1369f44cd48d5815.webp" alt="upa" class="avatar-img">
+                <div class="avatar-glow"></div>
+            </div>
+            <span class="name">u!pa</span>
+            <span class="handle">@i3pd</span>
+            <span class="badge" style="color: var(--coowner)">CO-OWNER</span>
+        </div>
+
+    </div>
+
+</body>
+</html>

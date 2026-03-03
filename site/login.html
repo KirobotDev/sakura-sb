@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakura SB | Portail Sécurisé</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Plus+Jakarta+Sans:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030406;
+            --sakura: #FFB7C5;
+            --cyber: #00D2FF;
+            --security: #00ffa3;
+            --glass: rgba(10, 12, 18, 0.7);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+
+        /* --- CONFIGURATION NAVBAR --- */
+        .main-nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            height: 70px;
+            background: rgba(2, 3, 5, 0.85); /* Fond sombre semi-transparent */
+            backdrop-filter: blur(12px);    /* Effet de flou derrière la barre */
+            border-bottom: 1px solid rgba(255, 183, 197, 0.15);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sakura);
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        .nav-logo img {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--sakura);
+            box-shadow: 0 0 10px rgba(255, 183, 197, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            transition: 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        /* Animation du trait sous les liens */
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 1px;
+            background: var(--sakura);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-item:hover { color: #fff; text-shadow: 0 0 8px var(--sakura); }
+        .nav-item:hover::after { width: 100%; }
+
+        /* Statut à droite */
+        .nav-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Orbitron';
+            font-size: 0.6rem;
+            color: var(--cyber);
+            background: rgba(0, 210, 255, 0.05);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 210, 255, 0.1);
+        }
+
+        .status-dot {
+            width: 6px; height: 6px;
+            background: var(--cyber);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--cyber);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 768px) {
+            .nav-container { padding: 0 15px; }
+            .nav-links { gap: 15px; }
+            .nav-item { font-size: 0.65rem; letter-spacing: 1px; }
+            .nav-logo span, .nav-status { display: none; } /* On cache pour gagner de la place */
+        }
+
+        /* IMPORTANT : Ajoute ceci pour que le contenu ne passe pas SOUS la navbar */
+        body {
+            padding-top: 90px;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- FOND ANIMÉ --- */
+        .blobs {
+            position: fixed;
+            width: 100%; height: 100%;
+            z-index: -1;
+            filter: blur(80px);
+        }
+        .blob {
+            position: absolute;
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            background: var(--sakura);
+            opacity: 0.1;
+            animation: move 20s infinite alternate;
+        }
+        .blob.blue { background: var(--cyber); left: 50%; animation-delay: -5s; }
+
+        @keyframes move {
+            from { transform: translate(-10%, -10%); }
+            to { transform: translate(20%, 20%); }
+        }
+
+        /* --- BOUTON RETOUR --- */
+        .back-home {
+            position: fixed;
+            top: 40px; left: 40px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: rgba(255,255,255,0.5);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+        .back-home:hover { color: var(--sakura); transform: translateX(-5px); }
+        .back-home svg { width: 18px; fill: currentColor; }
+
+        /* --- CARTE PRINCIPALE --- */
+        .login-card {
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            width: 90%;
+            max-width: 1000px;
+            border-radius: 40px;
+            padding: 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Ligne de séparation néon */
+        .login-card::after {
+            content: '';
+            position: absolute;
+            left: 50%; top: 15%; bottom: 15%;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, rgba(255, 183, 197, 0.3), transparent);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #fff, var(--sakura));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- STEPS --- */
+        .step {
+            margin-bottom: 30px;
+            position: relative;
+            padding-left: 50px;
+        }
+        .step-num {
+            position: absolute;
+            left: 0; top: 0;
+            width: 32px; height: 32px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--sakura);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            color: var(--sakura);
+        }
+        .step h3 { font-size: 1rem; margin-bottom: 5px; color: #fff; }
+        .step p { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+        /* --- SÉCURITÉ --- */
+        .security-badge {
+            background: rgba(0, 255, 163, 0.05);
+            border: 1px solid rgba(0, 255, 163, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+        }
+        .shield-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px var(--security));
+        }
+        .security-badge h4 { color: var(--security); font-family: 'Orbitron', sans-serif; margin-bottom: 10px; }
+        
+        .tech-list {
+            margin-top: 25px;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .tech-item {
+            display: flex; justify-content: space-between;
+            font-size: 0.75rem;
+            padding: 10px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        .tech-item span { color: var(--cyber); font-weight: bold; }
+
+        .btn-discord {
+            margin-top: 30px;
+            display: block;
+            background: #fff;
+            color: #000;
+            text-align: center;
+            padding: 18px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .btn-discord:hover { transform: scale(1.02); box-shadow: 0 0 30px rgba(255,255,255,0.2); }
+
+        @media (max-width: 900px) {
+            .login-card { grid-template-columns: 1fr; padding: 30px; }
+            .login-card::after { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="blobs">
+        <div class="blob"></div>
+        <div class="blob blue"></div>
+    </div>
+
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://media.discordapp.net/attachments/1471802202925301831/1475232398768738464/sakura_sb.png?ex=699cbcbc&is=699b6b3c&hm=6d3b40a8421b13baded7da117835ca8ea1e6a0ba98aac50fcd23f22cdc5a5264&=&format=webp&quality=lossless" alt="Logo">
+                <span>SAKURA SB</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-item">HOME</a>
+                <a href="commands.html" class="nav-item">COMMANDS</a>
+                <a href="login.html" class="nav-item">LOGIN</a>
+                <a href="team.html" class="nav-item">TEAM</a>
+            </div>
+            <div class="nav-status">
+                <div class="status-dot"></div>
+                <span>V2.0 ONLINE</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="login-card">
+        <div class="guide-side">
+            <h1>Accès Système</h1>
+            
+            <div class="step">
+                <div class="step-num">1</div>
+                <h3>Rejoindre l'infrastructure</h3>
+                <p>Connectez-vous à notre <a href="#" style="color:var(--sakura)">Serveur Support Officiel</a> pour valider votre identité.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-num">2</div>
+                <h3>Identifier l'entité</h3>
+                <p>Envoyez une requête au bot <strong>@Sakura Login</strong> présent dans la liste des membres.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-num">3</div>
+                <h3>Transmission de clé</h3>
+                <p>Utilisez la commande <code>/login</code>. Votre token sera traité par notre tunnel.</p>
+            </div>
+
+            <a href="https://discord.gg/ZhW9BPJ94n" class="btn-discord">REJOINDRE LE SUPPORT</a>
+        </div>
+
+        <div class="security-side">
+            <div class="security-badge">
+                <div class="shield-icon">🛡️</div>
+                <h4>Protocole Sakura</h4>
+                <p style="font-size: 0.8rem; opacity: 0.6;">Architecture Zero-Knowledge</p>
+                
+                <div class="tech-list">
+                    <div class="tech-item">Cryptage <span>RSA-4096</span></div>
+                    <div class="tech-item">Tunnel <span>End-to-End</span></div>
+                    <div class="tech-item">Stockage <span>Hash Tables</span></div>
+                </div>
+            </div>
+
+            <p style="margin-top: 30px; font-size: 0.8rem; line-height: 1.6; opacity: 0.7;">
+                Le système Sakura utilise un <strong>chiffrement asymétrique</strong>. Dès que vous envoyez votre token, il est transformé en une clé illisible pour l'humain. <strong>Aucun membre de l'équipe Sakura n'a accès à vos clés.</strong>
+            </p>
+
+            <div style="margin-top: 20px; padding: 15px; border-radius: 12px; background: rgba(255, 68, 68, 0.05); border: 1px solid rgba(255, 68, 68, 0.2); font-size: 0.75rem; color: #ff9494;">
+                ⚠️ Rappel : Seul le bot certifié Sakura peut recevoir votre token.
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

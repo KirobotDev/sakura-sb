@@ -1,0 +1,20 @@
+{
+  "ID_SALON_EXEMPLE_1": [
+    {
+      "content": "Ceci est un exemple de message supprimé",
+      "authorTag": "Pseudo#0001",
+      "authorId": "123456789012345678",
+      "time": 1771603039605,
+      "attachments": null
+    }
+  ],
+  "ID_SALON_EXEMPLE_2": [
+    {
+      "content": "Un autre message pour montrer la structure d'une liste",
+      "authorTag": "Auteur#0002",
+      "authorId": "987654321098765432",
+      "time": 1771602595342,
+      "attachments": null
+    }
+  ]
+}

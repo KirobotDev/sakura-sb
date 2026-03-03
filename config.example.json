@@ -1,0 +1,42 @@
+{
+    "settings": {
+        "global_delay_multiplier": 1,
+        "debug_mode": false
+    },
+    "accounts": [
+        {
+            "name": "COMPTE_1",
+            "token": "TOKEN_DISCORD_1",
+            "prefix": ">",
+            "language": "fr",
+            "premium_expires_at": 0,
+            "afk": {
+                "enabled": false,
+                "message": "Slt ! dsl je suis pas dispo"
+            },
+            "autobump": { "enabled": false, "channels": ["ID_CHANNEL_A"] },
+            "tagrotator": { "state": false, "guilds": ["ID_GUILD_A"], "delay": 60 },
+            "mimic": [],
+            "autoreact": [],
+            "is_premium": false,
+            "antigroup": true
+        },
+        {
+            "name": "COMPTE_2",
+            "token": "TOKEN_DISCORD_2",
+            "prefix": "!",
+            "language": "fr",
+            "premium_expires_at": 0,
+            "afk": {
+                "enabled": false,
+                "message": "En ligne sur le compte 2"
+            },
+            "autobump": { "enabled": false, "channels": ["ID_CHANNEL_B"] },
+            "tagrotator": { "state": false, "guilds": ["ID_GUILD_B"], "delay": 60 },
+            "mimic": [],
+            "autoreact": [],
+            "is_premium": false,
+            "antigroup": false
+        }
+    ]
+}

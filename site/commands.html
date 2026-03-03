@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/924611566148665346/baa8187f57979991d38812e415d41191.webp">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakura SB | Catalogue des Commandes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #020305;
+            --sakura: #FFB7C5;
+            --cyber: #00D2FF;
+            --premium: #FFD700;
+            --glass: rgba(255, 255, 255, 0.02);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            font-family: 'Orbitron';
+            font-size: 0.7rem;
+            color: var(--sakura);
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            opacity: 0.8;
+            padding-left: 10px;
+        }
+
+        /* --- CONFIGURATION NAVBAR --- */
+        .main-nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            height: 70px;
+            background: rgba(2, 3, 5, 0.85); /* Fond sombre semi-transparent */
+            backdrop-filter: blur(12px);    /* Effet de flou derrière la barre */
+            border-bottom: 1px solid rgba(255, 183, 197, 0.15);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--sakura);
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        .nav-logo img {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--sakura);
+            box-shadow: 0 0 10px rgba(255, 183, 197, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            transition: 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        /* Animation du trait sous les liens */
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 1px;
+            background: var(--sakura);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-item:hover { color: #fff; text-shadow: 0 0 8px var(--sakura); }
+        .nav-item:hover::after { width: 100%; }
+
+        /* Statut à droite */
+        .nav-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Orbitron';
+            font-size: 0.6rem;
+            color: var(--cyber);
+            background: rgba(0, 210, 255, 0.05);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 210, 255, 0.1);
+        }
+
+        .status-dot {
+            width: 6px; height: 6px;
+            background: var(--cyber);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--cyber);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 768px) {
+            .nav-container { padding: 0 15px; }
+            .nav-links { gap: 15px; }
+            .nav-item { font-size: 0.65rem; letter-spacing: 1px; }
+            .nav-logo span, .nav-status { display: none; } /* On cache pour gagner de la place */
+        }
+        /* IMPORTANT : Ajoute ceci pour que le contenu ne passe pas SOUS la navbar */
+        body {
+            padding-top: 90px;
+        }
+
+        /* --- CONTENT --- */
+        .main-content {
+            flex: 1;
+            padding: 40px 60px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .header-area { margin-bottom: 50px; }
+        .back-btn { text-decoration: none; color: var(--sakura); font-family: 'Orbitron'; font-size: 0.7rem; letter-spacing: 2px; }
+        h1 { font-family: 'Orbitron'; font-size: 2.5rem; margin-top: 20px; letter-spacing: 5px; }
+
+        .cmd-section { margin-bottom: 60px; scroll-margin-top: 40px; }
+        .cat-title {
+            font-family: 'Orbitron';
+            color: var(--cyber);
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.1);
+        }
+
+        .cmd-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .cmd-card {
+            background: var(--glass);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 16px;
+            padding: 24px;
+            transition: 0.3s;
+        }
+
+        .cmd-card:hover {
+            border-color: rgba(255, 183, 197, 0.3);
+            background: rgba(255, 183, 197, 0.02);
+            transform: translateY(-2px);
+        }
+
+        .cmd-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .cmd-name { font-family: 'Orbitron'; color: var(--sakura); font-size: 0.95rem; font-weight: 900; }
+        
+        .syntax {
+            display: block;
+            background: rgba(0,0,0,0.3);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--cyber);
+            margin: 12px 0;
+            border: 1px solid rgba(0, 210, 255, 0.1);
+        }
+
+        .cmd-desc { font-size: 0.85rem; opacity: 0.6; line-height: 1.6; }
+
+        .premium-tag {
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            color: #000;
+            font-size: 0.6rem;
+            font-weight: 900;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--sakura); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://media.discordapp.net/attachments/1471802202925301831/1475232398768738464/sakura_sb.png?ex=699cbcbc&is=699b6b3c&hm=6d3b40a8421b13baded7da117835ca8ea1e6a0ba98aac50fcd23f22cdc5a5264&=&format=webp&quality=lossless" alt="Logo">
+                <span>SAKURA SB</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-item">HOME</a>
+                <a href="commands.html" class="nav-item">COMMANDS</a>
+                <a href="login.html" class="nav-item">LOGIN</a>
+                <a href="team.html" class="nav-item">TEAM</a>
+            </div>
+            <div class="nav-status">
+                <div class="status-dot"></div>
+                <span>V2.0 ONLINE</span>
+            </div>
+        </div>
+    </nav>
+
+    <aside class="sidebar">
+        <h2>CATEGORIES</h2>
+        <a href="#afk" class="nav-item active">AFK <span>1</span></a>
+        <a href="#autobump" class="nav-item">AUTOBUMP <span>1</span></a>
+        <a href="#dox" class="nav-item">DOX <span>1</span></a>
+        <a href="#fun" class="nav-item">FUN <span>6</span></a>
+        <a href="#info" class="nav-item">INFO <span>4</span></a>
+        <a href="#ip" class="nav-item">IP <span>2</span></a>
+        <a href="#perso" class="nav-item">PERSO <span>2</span></a>
+        <a href="#raid" class="nav-item">RAID <span>6</span></a>
+        <a href="#rpc" class="nav-item">RPC <span>5</span></a>
+        <a href="#setup" class="nav-item">SETUP <span>2</span></a>
+        <a href="#utils" class="nav-item">UTILS <span>4</span></a>
+    </aside>
+
+    <main class="main-content">
+        <div class="header-area">
+            <a href="index.html" class="back-btn">< RETOUR</a>
+            <h1>COMMANDS</h1>
+        </div>
+
+        <section id="afk" class="cmd-section">
+            <h3 class="cat-title">AFK</h3>
+            <div class="cmd-grid">
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>afk</span></div>
+                    <code class="syntax">>afk &lt;start|stop|message|show&gt; [texte]</code>
+                    <p class="cmd-desc">Gère votre statut d'absence. Répond automatiquement aux mentions.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="autobump" class="cmd-section">
+            <h3 class="cat-title">AUTOBUMP</h3>
+            <div class="cmd-grid">
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>autobump</span></div>
+                    <code class="syntax">>autobump &lt;on|off&gt;</code>
+                    <code class="syntax">>autobump &lt;add|remove|list&gt;</code>
+                    <p class="cmd-desc">Automatise le bump Disboard de vos serveur sur les listes Discord.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="dox" class="cmd-section">
+            <h3 class="cat-title">DOX</h3>
+            <div class="cmd-grid">
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>whois</span></div>
+                    <code class="syntax">>whois [@user|ID]</code>
+                    <p class="cmd-desc">Récupère les informations publiques et privées d'un compte.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="fun" class="cmd-section">
+            <h3 class="cat-title">FUN</h3>
+            <div class="cmd-grid">
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>autoreact</span></div>
+                    <code class="syntax">>autoreact [@user] [emoji]</code>
+                    <p class="cmd-desc">Réagit à chaque message d'une cible précise.</p>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>fakenitro</span></div>
+                    <code class="syntax">>fakenitro</code>
+                    <p class="cmd-desc">Envoie un faux lien Gift Nitro cliquable.</p>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>joke</span></div>
+                    <code class="syntax">>joke</code>
+                    <p class="cmd-desc">Raconte une blague aléatoire (humour noir inclus).</p>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>mimic</span></div>
+                    <code class="syntax">>mimic [@user]</code>
+                    <p class="cmd-desc">Copie automatiquement le texte de l'utilisateur visé.</p>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>nsfw</span></div>
+                    <code class="syntax">>nsfw <catégorie></code>
+                    <p class="cmd-desc">Menu interactif pour les commandes réservées aux salons NSFW.</p>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>spotify</span></div>
+                    <code class="syntax">>spotify &lt;play|pause|next|previous|current&gt;</code>
+                    <code class="syntax">>spotify &lt;volume|me&gt;</code>
+                    <p class="cmd-desc">Contrôlez votre compte Spotify lié.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="raid" class="cmd-section">
+            <h3 class="cat-title">RAID & DESTRUCTION</h3>
+            <div class="cmd-grid">
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>nuke</span> <span class="premium-tag">Premium</span></div>
+                    <code class="syntax">>nuke &lt;id&gt;</code>
+                    <p class="cmd-desc">Suppression complète des canaux du serveur.</p>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>dmall</span> <span class="premium-tag">Premium</span></div>
+                    <code class="syntax">>dmall &lt;id&gt; &lt;message&gt;</code>
+                    <p class="cmd-desc">Contacte chaque membre du serveur en message privé.</p>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>kickall</span> <span class="premium-tag">Premium</span></div>
+                    <code class="syntax">>kickall &lt;id&gt;</code>
+                    <p class="cmd-desc">Expulse tous les membres (hors staff supérieur).</p>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>delemojis</span> <span class="premium-tag">Premium</span></div>
+                    <code class="syntax">>delemojis &lt;id&gt;</code>
+                    <p class="cmd-desc">Nettoie tous les emojis personnalisés du serveur.</p>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>delroles</span> <span class="premium-tag">Premium</span></div>
+                    <code class="syntax">>delroles &lt;id&gt;</code>
+                    <p class="cmd-desc">Supprime tous les rôles du serveur.</p>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>spam</span></div>
+                    <code class="syntax">>spam &lt;nombre&gt; &lt;message&gt;</code>
+                    <p class="cmd-desc">Envoie un message un certain nombre de fois.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="rpc" class="cmd-section">
+            <h3 class="cat-title">RICH PRESENCE (RPC)</h3>
+            <div class="cmd-grid">
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>setrpc</span></div>
+                    <code class="syntax">>setrpc &lt;activité&gt;</code>
+                    <p class="cmd-desc">Définit votre présence personnalisée (Jeux, Stream, etc).</p>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>configrpc</span></div>
+                    <code class="syntax">>configrpc</code>
+                    <p class="cmd-desc">Ouvre le menu de configuration avancée du RPC.</p>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>activaterpc</span></div>
+                    <code class="syntax">>activaterpc &lt;on|off&gt;</code>
+                    <p class="cmd-desc">Bascule l'état du RPC.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="utils" class="cmd-section">
+            <h3 class="cat-title">UTILITIES</h3>
+            <div class="cmd-grid">
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>clear</span></div>
+                    <code class="syntax">>clear &lt;quantité&gt;</code>
+                    <p class="cmd-desc">Supprime vos propres messages ou ceux du salon.</p>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>snipe</span></div>
+                    <code class="syntax">>snipe &lt;n&gt;</code>
+                    <p class="cmd-desc">Récupère le n-ème dernier message supprimé dans le salon.</p>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-header"><span class="cmd-name">>readall</span></div>
+                    <code class="syntax">>readall</code>
+                    <p class="cmd-desc">Marque tous vos serveurs/MP comme lus instantanément.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Gestion de l'état actif dans la sidebar au clic
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
