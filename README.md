@@ -1,4 +1,4 @@
-Mise en open source du $£lfbot sakura $£lfbot 
+Mise en open source du S£lfbot sakura S£lfbot 
 
 # Raison 
 
